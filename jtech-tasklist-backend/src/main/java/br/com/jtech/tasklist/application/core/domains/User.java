@@ -1,6 +1,7 @@
 package br.com.jtech.tasklist.application.core.domains;
 
 import br.com.jtech.tasklist.adapters.output.repositories.entities.UserEntity;
+import br.com.jtech.tasklist.adapters.output.repositories.entities.dto.UserAuthDTO;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -47,25 +48,23 @@ public class User {
      * Creates domain model from entity.
      * Factory method pattern for object creation.
      */
-    public static User of(UserEntity entity) {
+    public static User of(UserAuthDTO entity) {
         if (entity == null) {
             return null;
         }
         return User.builder()
-                .id(entity.getId().toString())
-                .name(entity.getName())
-                .email(entity.getEmail())
-                .password(entity.getPassword())
-                .createdAt(entity.getCreatedAt())
-                .updatedAt(entity.getUpdatedAt())
-                .active(entity.isActive())
+                .id(entity.id().toString())
+                .name(entity.name())
+                .email(entity.email())
+                .password(entity.password())
+                .active(entity.active())
                 .build();
     }
 
     /**
      * Creates domain models from entities list.
      */
-    public static List<User> of(List<UserEntity> entities) {
+    public static List<User> of(List<UserAuthDTO> entities) {
         if (entities == null) {
             return new ArrayList<>();
         }

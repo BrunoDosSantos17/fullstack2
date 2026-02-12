@@ -6,12 +6,14 @@ import br.com.jtech.tasklist.adapters.input.protocols.auth.LoginRequest;
 import br.com.jtech.tasklist.adapters.input.protocols.auth.RegisterRequest;
 import br.com.jtech.tasklist.adapters.output.repositories.UserRepository;
 import br.com.jtech.tasklist.adapters.output.repositories.entities.UserEntity;
+import br.com.jtech.tasklist.application.core.domains.User;
 import br.com.jtech.tasklist.config.infra.exceptions.BusinessException;
 import br.com.jtech.tasklist.config.infra.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -133,9 +135,19 @@ public class AuthService {
                         .build())
                 .build();
     }
-    
 
 
+    public User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new BusinessException("User not authenticated");
+        }
 
+        String email = authentication.getName();
+        var user = userRepository.findActiveByEmail(email)
+                .orElseThrow(() -> new BusinessException("User not found"));
+
+        return User.of(user).withoutPassword();
+    }
 }

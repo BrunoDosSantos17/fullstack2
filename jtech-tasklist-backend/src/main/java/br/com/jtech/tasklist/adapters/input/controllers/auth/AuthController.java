@@ -49,7 +49,7 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/me")
+    @GetMapping("/currentUser")
     @Operation(summary = "Get current user", description = "Returns information about the currently authenticated user")
     public ResponseEntity<User> getCurrentUser() {
         log.info("Received request for current user information");

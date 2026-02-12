@@ -36,12 +36,9 @@ logging:
     name: ./logs/${spring.application.name}.log
 springdoc:
   api-docs:
-    groups:
-      enabled: 'true'
-    path: /doc/tasklist/v3/api-documents
+    path: /v3/api-docs
   swagger-ui:
-    enabled: 'true'
-    path: /doc/tasklist/v1/api.html
+    path: /swagger-ui.html
 api:
   version: v1
   description: Description here

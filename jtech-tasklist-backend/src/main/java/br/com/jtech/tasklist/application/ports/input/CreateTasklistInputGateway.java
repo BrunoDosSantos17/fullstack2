@@ -12,7 +12,7 @@
 */
 package br.com.jtech.tasklist.application.ports.input;
 
-import br.com.jtech.tasklist.application.core.domains.Tasklist;
+import br.com.jtech.tasklist.application.core.domains.TaskList;
 
 /**
 * class TasklistInputGateway 
@@ -20,5 +20,5 @@ import br.com.jtech.tasklist.application.core.domains.Tasklist;
 * user angelo.vicente 
 */
 public interface CreateTasklistInputGateway {
-    Tasklist create(Tasklist tasklist);
+    TaskList create(TaskList tasklist);
 }

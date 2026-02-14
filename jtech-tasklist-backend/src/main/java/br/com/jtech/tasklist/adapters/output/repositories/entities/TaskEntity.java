@@ -1,62 +1,36 @@
 package br.com.jtech.tasklist.adapters.output.repositories.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
+@Table(name = "tasks")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Table(name = "tasks")
 public class TaskEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(nullable = false, length = 200)
-    private String title;
+    @Column(name = "user_id", nullable = false)
+    private UUID userId;
 
-    @Lob
-    private String description;
-
-    @Column(nullable = false, length = 100)
-    private String listName;
+    @Column(name = "list_id", nullable = false)
+    private UUID listId;
 
     @Column(nullable = false)
-    private boolean completed = false;
+    private String title;
 
-    @CreationTimestamp
-    private LocalDateTime createdAt;
+    private String description;
 
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
+    @Column(nullable = false)
+    private boolean completed;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "fk_task_user"))
-    @NotNull(message = "User is mandatory")
-    private UserEntity user;
-
-    @PrePersist
-    protected void onCreate() {
-        completed = false;
-
-    }
-
-    public boolean belongsToUser(UUID userId) {
-        return user != null && user.getId().equals(userId);
-    }
-
-    public void toggleCompleted() {
-        this.completed = !this.completed;
-    }
+    private LocalDate dueDate;
 }
-

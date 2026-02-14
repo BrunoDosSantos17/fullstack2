@@ -15,5 +15,38 @@ spring:
     console:
       enabled: true
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
 server:
   port: 8080
+
+logging:
+  level:
+    root: info
+    org.springframework.web: info
+    br.com.jtech.tasklist: debug
+  file:
+    name: ./logs/${spring.application.name}.log
+
+springdoc:
+  api-docs:
+    path: /doc/tasklist/v3/api-documents
+  swagger-ui:
+    enabled: true
+    path: /doc/tasklist/v1/api.html
+
+api:
+  version: v1
+  description: Local development setup
+  url:
+    homologation: http://localhost:8080
+    production: http://localhost:8080
+
+jwt:
+  secret: super-secret-key-very-long-for-jwt-signature-2025
+  expiration: 86400000
+  refresh-expiration: 604800000

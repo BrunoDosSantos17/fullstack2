@@ -13,7 +13,7 @@
 package br.com.jtech.tasklist.application.core.usecases;
 
 
-import br.com.jtech.tasklist.application.core.domains.Tasklist;
+import br.com.jtech.tasklist.application.core.domains.TaskList;
 import br.com.jtech.tasklist.application.ports.input.CreateTasklistInputGateway;
 import br.com.jtech.tasklist.application.ports.output.CreateTasklistOutputGateway;
 
@@ -30,7 +30,7 @@ public class CreateTasklistUseCase implements CreateTasklistInputGateway {
         this.createTasklistOutputGateway = createTasklistOutputGateway;
      }
 
-    public Tasklist create(Tasklist tasklist) {
+    public TaskList create(TaskList tasklist) {
         return createTasklistOutputGateway.create(tasklist);
      }
  }

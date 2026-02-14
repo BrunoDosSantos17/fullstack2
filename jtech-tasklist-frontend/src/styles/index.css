@@ -1,0 +1,135 @@
+/* ===== Layout Geral ===== */
+
+.app-container {
+  background-color: #f6f9f8;
+  min-height: 100vh;
+}
+
+/* ===== Drawer ===== */
+
+.app-drawer {
+  background-color: #ffffff;
+  border-right: 1px solid rgba(66, 184, 131, 0.15);
+}
+
+.drawer-title {
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  color: #35495e;
+}
+
+/* ===== App Bar ===== */
+
+.app-bar {
+  background-color: #42b883 !important;
+  color: #ffffff;
+  border-bottom: none;
+}
+
+.app-title {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.user-name {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+/* ===== Lista do Menu ===== */
+
+.drawer-list-item {
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  color: #35495e;
+}
+
+.drawer-list-item:hover {
+  background: rgba(66, 184, 131, 0.12);
+  color: #42b883;
+}
+
+/* ===== Notificações ===== */
+
+.notification-list {
+  padding: 6px;
+  background-color: #ffffff;
+}
+
+.notification-item {
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.notification-item:hover {
+  background: rgba(66, 184, 131, 0.12);
+}
+
+/* ===== Snackbar ===== */
+
+.v-snackbar {
+  font-weight: 500;
+}
+
+/* ===== Responsividade ===== */
+
+@media (max-width: 600px) {
+  .app-title {
+    font-size: 1rem !important;
+  }
+
+  .user-name {
+    display: none;
+  }
+}
+
+.drawer-header {
+  background: #42b883;
+  color: white;
+  border-radius: 8px;
+  margin: 8px;
+  padding: 10px 12px;
+}
+
+.drawer-header .v-list-item-title {
+  color: white !important;
+  font-weight: 600;
+}
+
+.app-drawer {
+  background-color: #42b883;
+  color: white;
+}
+
+.drawer-title {
+  font-weight: bold;
+  color: white;
+}
+
+.drawer-list-item {
+  color: white;
+  border-radius: 8px;
+  margin: 4px 8px;
+  transition: 0.2s ease;
+}
+
+.drawer-list-item:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.active-list {
+  background-color: white;
+  color: #42b883 !important;
+  font-weight: bold;
+}
+
+/* App Bar */
+.app-bar {
+  background-color: #ffffff;
+}
+
+.app-title {
+  font-weight: bold;
+}

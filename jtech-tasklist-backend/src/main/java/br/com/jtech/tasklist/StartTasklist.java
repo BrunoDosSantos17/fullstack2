@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class StartTasklist {
 
-	public static void main(String[] args) {
-		SpringApplication.run(StartTasklist.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(StartTasklist.class, args);
+    }
 
 }

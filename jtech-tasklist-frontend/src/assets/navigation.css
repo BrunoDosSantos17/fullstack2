@@ -1,0 +1,37 @@
+/* Navigation styles for task lists */
+
+.task-header {
+  background-color: var(--color-background-soft);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.back-button {
+  margin-right: 1rem;
+}
+
+.list-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--color-heading);
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.task-list-item {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.task-list-item.completed .task-title {
+  text-decoration: line-through;
+  color: var(--color-text-light-2);
+}
+
+.create-dialog .v-card {
+  border-radius: 12px;
+}

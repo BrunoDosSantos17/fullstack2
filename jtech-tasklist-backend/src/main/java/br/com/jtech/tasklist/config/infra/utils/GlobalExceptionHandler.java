@@ -9,7 +9,7 @@
  * Information and shall use it only in accordance with the terms of the
  * license agreement you entered into with J-Tech.
  */
-package br.com.jtech.tasklist.config.infra.handlers;
+package br.com.jtech.tasklist.config.infra.utils;
 
 
 
@@ -46,6 +46,15 @@ public class GlobalExceptionHandler {
         error.setMessage("Error on request");
         error.setTimestamp(LocalDateTime.now());
         error.setSubErrors(subErrors(ex));
+        error.setDebugMessage(ex.getLocalizedMessage());
+        return buildResponseEntity(error);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ApiError> handleIllegalArgumentException(IllegalArgumentException ex) {
+        ApiError error = new ApiError(HttpStatus.BAD_REQUEST);
+        error.setMessage(ex.getMessage());
+        error.setTimestamp(LocalDateTime.now());
         error.setDebugMessage(ex.getLocalizedMessage());
         return buildResponseEntity(error);
     }

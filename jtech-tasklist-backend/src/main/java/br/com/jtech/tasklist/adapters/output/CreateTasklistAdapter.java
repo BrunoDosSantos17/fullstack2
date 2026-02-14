@@ -12,7 +12,7 @@
 */
 package br.com.jtech.tasklist.adapters.output;
 
-import br.com.jtech.tasklist.application.core.domains.Tasklist;
+import br.com.jtech.tasklist.application.core.domains.TaskList;
 import br.com.jtech.tasklist.application.ports.output.CreateTasklistOutputGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -29,7 +29,7 @@ public class CreateTasklistAdapter implements CreateTasklistOutputGateway {
     // private final TasklistRepository repository;
 
     @Override
-    public Tasklist create(Tasklist tasklist) {
+    public TaskList create(TaskList tasklist) {
        // return this.repository.save(tasklist);
           return tasklist;
     }

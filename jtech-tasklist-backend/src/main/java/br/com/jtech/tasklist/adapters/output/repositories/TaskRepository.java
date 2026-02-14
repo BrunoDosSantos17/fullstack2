@@ -1,39 +1,91 @@
 package br.com.jtech.tasklist.adapters.output.repositories;
 
 import br.com.jtech.tasklist.adapters.output.repositories.entities.TaskEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
+import br.com.jtech.tasklist.application.core.domains.Task;
+import br.com.jtech.tasklist.application.ports.output.TaskRepositoryPort;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
-@Repository
-public interface TaskRepository extends JpaRepository<TaskEntity, UUID> {
+@Component
+@RequiredArgsConstructor
+public class TaskRepository implements TaskRepositoryPort {
 
-    @Query("SELECT t FROM TaskEntity t WHERE t.user.id = :userId ORDER BY t.createdAt DESC")
-    List<TaskEntity> findByUserId(@Param("userId") UUID userId);
+    private final SpringDataTaskRepository repository;
 
-    @Query("SELECT t FROM TaskEntity t WHERE t.user.id = :userId AND t.listName = :listName ORDER BY t.createdAt DESC")
-    List<TaskEntity> findByUserIdAndListName(@Param("userId") UUID userId, @Param("listName") String listName);
+    private Task toDomain(TaskEntity e) {
+        return Task.builder()
+                .id(e.getId().toString())
+                .userId(e.getUserId().toString())
+                .listId(e.getListId().toString())
+                .title(e.getTitle())
+                .description(e.getDescription())
+                .completed(e.isCompleted())
+                .dueDate(e.getDueDate())
+                .build();
+    }
 
-    @Query("SELECT t FROM TaskEntity t WHERE t.id = :id AND t.user.id = :userId")
-    Optional<TaskEntity> findByIdAndUserId(@Param("id") UUID id, @Param("userId") UUID userId);
+    private TaskEntity toEntity(Task t) {
+        return TaskEntity.builder()
+                .id(t.getId() != null ? UUID.fromString(t.getId()) : null)
+                .userId(UUID.fromString(t.getUserId()))
+                .listId(UUID.fromString(t.getListId()))
+                .title(t.getTitle())
+                .description(t.getDescription())
+                .completed(t.isCompleted())
+                .dueDate(t.getDueDate())
+                .build();
+    }
 
-    @Query("SELECT DISTINCT t.listName FROM TaskEntity t WHERE t.user.id = :userId ORDER BY t.listName")
-    List<String> findDistinctListNamesByUserId(@Param("userId") UUID userId);
+    @Override
+    public Task save(Task task) {
+        return toDomain(repository.save(toEntity(task)));
+    }
 
-    @Query("SELECT t FROM TaskEntity t WHERE t.user.id = :userId AND t.completed = true ORDER BY t.updatedAt DESC")
-    List<TaskEntity> findCompletedByUserId(@Param("userId") UUID userId);
+    @Override
+    public Task update(Task task) {
+        return toDomain(repository.save(toEntity(task)));
+    }
 
-    @Query("SELECT t FROM TaskEntity t WHERE t.user.id = :userId AND t.completed = false ORDER BY t.createdAt DESC")
-    List<TaskEntity> findPendingByUserId(@Param("userId") UUID userId);
+    @Override
+    public Optional<Task> findById(String id) {
+        return repository.findById(UUID.fromString(id)).map(this::toDomain);
+    }
 
-    @Query("SELECT CASE WHEN COUNT(t) > 0 THEN true ELSE false END FROM TaskEntity t " +
-            "WHERE t.user.id = :userId AND t.listName = :listName AND LOWER(t.title) = LOWER(:title)")
-    boolean existsByUserIdAndListNameAndTitle(@Param("userId") UUID userId,
-                                              @Param("listName") String listName,
-                                              @Param("title") String title);
+    @Override
+    public List<Task> findAll() {
+        return repository.findAll()
+                .stream().map(this::toDomain).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Task> findAllByUserId(String userId) {
+        return repository.findAllByUserId(UUID.fromString(userId))
+                .stream().map(this::toDomain).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Task> findAllByListId(String listId) {
+        return repository.findAllByListId(UUID.fromString(listId))
+                .stream().map(this::toDomain).collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteById(String id) {
+        repository.deleteById(UUID.fromString(id));
+    }
+
+    @Override
+    public boolean existsByTitleAndListId(String title, String listId) {
+        return repository.existsByTitleAndListId(title, UUID.fromString(listId));
+    }
+
+    @Override
+    public boolean existsByListId(String listId) {
+        return repository.existsByListId(UUID.fromString(listId));
+    }
 }

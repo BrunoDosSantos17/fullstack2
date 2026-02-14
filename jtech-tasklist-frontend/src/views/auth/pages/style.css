@@ -1,0 +1,36 @@
+/* ===== Fundo da tela ===== */
+
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    135deg,
+    #42b883 0%,
+    #35495e 100%
+  );
+}
+
+/* ===== Card ===== */
+
+.login-card {
+  padding: 20px;
+  border-radius: 16px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== Botão ===== */
+
+.login-btn {
+  background-color: #42b883;
+  color: white;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.login-btn:hover {
+  background-color: #369870;
+  transform: translateY(-1px);
+}
